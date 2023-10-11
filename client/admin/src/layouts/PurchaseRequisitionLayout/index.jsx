@@ -2,9 +2,9 @@ import React from 'react';
 import SideNav from '../../components/SideNav';
 import Header from '../../components/Header';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import ViewDelivery from './ViewDeivery';
+import ViewPurchaseRequisition from './ViewPurchaseRequisition';
 
-const DeliveryLayout = () => {
+const PurchaseRequisitionLayout = () => {
     return (
         <>
             <div className='flex sticky top-0 left-0'>
@@ -15,7 +15,7 @@ const DeliveryLayout = () => {
                         <Outlet />
                         <Routes>
                             <Route>
-                                <Route path='view-delivery' element={<ViewDelivery />} />
+                                <Route path='view-requisition' element={<ViewPurchaseRequisition />} />
                             </Route>
                         </Routes>
                     </div>
@@ -25,4 +25,4 @@ const DeliveryLayout = () => {
     );
 }
 
-export default DeliveryLayout;
+export default PurchaseRequisitionLayout;

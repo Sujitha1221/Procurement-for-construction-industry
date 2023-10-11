@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminLayout from "../layouts/AdminLayout";
-import DeliveryLayout from "../layouts/DeliveryLayout";
+import PurchaseRequisitionLayout from "../layouts/PurchaseRequisitionLayout";
 import OrderLayout from "../layouts/OrderLayout";
 
 const FrontendRoutes = () => {
@@ -12,7 +12,7 @@ const FrontendRoutes = () => {
           <Route element={<AdminLayout />}>
             <Route path="/" />
           </Route>
-          <Route path="purchaseRequisition" element={<DeliveryLayout />}>
+          <Route path="purchaseRequisition" element={<PurchaseRequisitionLayout />}>
             <Route path="view-requisition" />
           </Route>
           <Route path="order" element={<OrderLayout />}>
