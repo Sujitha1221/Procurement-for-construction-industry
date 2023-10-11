@@ -38,15 +38,15 @@ const SideNav = () => {
         }, 
 
         {
-            name: 'Delivery Management',
+            name: 'Purchase Requisition',
             icon: faTruck,
-            link: '/delivery/view-delivery'
+            link: '/purchaseRequisition/view-requisition'
         },
 
         {
-            name: 'Delivery Driver Management',
+            name: 'Order',
             icon: faUsers,
-            link: '/delivery-driver/view-delivery-driver'
+            link: '/order/view-order'
         }
     ]
 
@@ -63,10 +63,10 @@ const SideNav = () => {
                         </button>
                     </div>
                 </div>
-                <div className='grid'>
+                <div className='grid' style={{marginTop:200}}>
                     {adminNavigation && adminNavigation.length ? adminNavigation.map((item) => (
                         <Link key={item.link} to={item.link}>
-                            <div className={`px-[20px] py-[10px] w-full flex items-center gap-[10px] hover:bg-gradient-to-t from-yellow-500 to-yellow-600 hover:bg-opacity-20 ${item.link == activePage ? 'bg-black bg-opacity-40' : ''}`}>
+                            <div className={`px-[20px] py-[10px] w-full flex items-center gap-[10px] border border-transparent hover:bg-yellow-300 ${item.link == activePage ? 'bg-yellow-300 border border-r-yellow-500 border-4' : ''}`}>
                                 <div className='text-black w-[24px]'>
                                     <FontAwesomeIcon icon={item.icon} />
                                 </div>
@@ -79,8 +79,8 @@ const SideNav = () => {
                         <></>
                     )}
                 </div>
-                <div>
-                    <button>
+                <div className="flex justify-center" style={{marginTop:200}}>
+                    <button className="w-[200px] bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold  py-2 px-4 rounded-lg">
                         Log out
                     </button>
                 </div>

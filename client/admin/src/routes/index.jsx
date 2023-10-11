@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminLayout from "../layouts/AdminLayout";
 import DeliveryLayout from "../layouts/DeliveryLayout";
-import DeliveryDriverLayout from "../layouts/DeliveryDriverLayout";
+import OrderLayout from "../layouts/OrderLayout";
 
 const FrontendRoutes = () => {
   return (
@@ -12,12 +12,12 @@ const FrontendRoutes = () => {
           <Route element={<AdminLayout />}>
             <Route path="/" />
           </Route>
-          <Route path="delivery" element={<DeliveryLayout />}>
-            <Route path="view-delivery" />
+          <Route path="purchaseRequisition" element={<DeliveryLayout />}>
+            <Route path="view-requisition" />
           </Route>
-          <Route path="delivery-driver" element={<DeliveryDriverLayout />}>
-            <Route path="view-delivery-driver" />
-            <Route path="add-delivery-driver" />
+          <Route path="order" element={<OrderLayout />}>
+            <Route path="view-order" />
+            <Route path="add-order" />
           </Route>
         </Routes>
       </Router>
