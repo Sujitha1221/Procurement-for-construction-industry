@@ -4,6 +4,8 @@ import cors from "cors";
 import databaseConnection from "./config/database.mjs";
 import logger from "./utils/logger.mjs";
 import PurchaseRequisitionRoute from "./routes/PurchaseRequisitionRoute.mjs"
+import UserRouter from "./routes/UserRoute.mjs";
+import LoginRouter from "./routes/LoginRoute.mjs";
 
 const app = express();
 const PORT = process.env.PORT || "8080";
@@ -20,6 +22,8 @@ app.use("/uploads", express.static("uploads"));
 app.use(bodyParser.json());
 
 app.use("/purchase-requisition", PurchaseRequisitionRoute);
+app.use("/login", LoginRouter);
+app.use("/user", UserRouter);
 
 
 

@@ -15,7 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { Modal } from "antd";
 
-const ViewPurchaseRequisition = () => {
+const ViewPurchaseRequisitionSenior = () => {
   const [visible, setVisible] = useState(false);
   const [requisitions, setAllRequisition] = useState([]);
   const [allRequisitions, setAllRequisitions] = useState([]);
@@ -103,7 +103,7 @@ const ViewPurchaseRequisition = () => {
 
   return (
     <>
-      <TableContainer component={Paper} style={{ marginTop: "20px" }}>
+      <TableContainer component={Paper} style={{ marginTop: "70px" }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -237,4 +237,4 @@ const ViewPurchaseRequisition = () => {
   );
 };
 
-export default ViewPurchaseRequisition;
+export default ViewPurchaseRequisitionSenior;
