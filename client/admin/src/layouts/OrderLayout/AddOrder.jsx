@@ -36,6 +36,36 @@ const AddOrder = () => {
 
     getAllRequisition();
   }, []);
+
+  function placeOrder() {
+    axios
+    .post("http://localhost:8080/order/add-order", {
+      purchaseRequisition:requisitions, supplier:selSupplier
+    })
+    .then((res) => {
+      if (res.data != null){
+        axios
+      .put("http://localhost:8080/purchase-requisition/update-items", {
+        _id: requisitions._id,
+        approvalStatus: "Order Placed",
+        reason: '',
+      })
+      .then((res) => {
+        if (res.data != null)
+        window.location.replace("/order/view-order");
+      })
+      .catch((err) => {
+        console.error("Error : " + err.message);
+      });
+      }
+    })
+    .catch((err) => {
+      console.error("Error : " + err.message);
+    });
+
+    
+}
+
   return (
     <>
       <div className="flex flex-col align-items w-full min-h-[85vh]">
@@ -135,7 +165,7 @@ const AddOrder = () => {
           </div>
           <div class="col-span-2 flex justify-center pt-5">
             <button
-              type="submit"
+              onClick={placeOrder}
               className="bg-transparent text-yellow-600 border-yellow-600 hover:bg-yellow-600 hover:text-white font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded"
             >
               Place Order

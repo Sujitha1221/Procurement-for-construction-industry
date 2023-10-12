@@ -6,6 +6,7 @@ import logger from "./utils/logger.mjs";
 import PurchaseRequisitionRoute from "./routes/PurchaseRequisitionRoute.mjs"
 import UserRouter from "./routes/UserRoute.mjs";
 import LoginRouter from "./routes/LoginRoute.mjs";
+import OrderRouter from "./routes/OrderRoute.mjs";
 
 const app = express();
 const PORT = process.env.PORT || "8080";
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 app.use("/purchase-requisition", PurchaseRequisitionRoute);
 app.use("/login", LoginRouter);
 app.use("/user", UserRouter);
+app.use("/order", OrderRouter);
 
 
 
