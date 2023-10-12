@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faCartShopping, faChartSimple, faDriversLicense, faTruck, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
+import LogOut from '../../layouts/LogoutLayout';
 
 const SideNav2 = () => {
 
@@ -56,9 +57,11 @@ const SideNav2 = () => {
                     )}
                 </div>
                 <div className="flex justify-center" style={{marginTop:50}}>
+                <Link to={{pathname: '/logout'}}>
                     <button className="w-[200px] bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold  py-2 px-4 rounded-lg">
                         Log out
                     </button>
+                    </Link>
                 </div>
             </div>
         </>

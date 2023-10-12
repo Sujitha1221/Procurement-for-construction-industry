@@ -5,6 +5,7 @@ import PurchaseRequisitionLayout from "../layouts/PurchaseRequisitionLayout";
 import OrderLayout from "../layouts/OrderLayout";
 import CommonLayout from "../layouts/Common Layout"; 
 import AccountantLayout from "../layouts/AccountantLayout";
+import LogOut from "../layouts/LogoutLayout";
 
 const FrontendRoutes = () => {
   return (
@@ -27,6 +28,7 @@ const FrontendRoutes = () => {
             <Route path="view-order" />
             <Route path="add-order/:id" />
           </Route>
+          <Route exact path="/logout" element={<LogOut/>}/> 
         </Routes>
       </Router>
     </>
