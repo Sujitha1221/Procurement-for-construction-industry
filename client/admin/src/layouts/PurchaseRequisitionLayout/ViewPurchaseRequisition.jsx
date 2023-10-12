@@ -179,7 +179,7 @@ const ViewPurchaseRequisition = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {requisitions
+            {allRequisitions
             .map((requisition) => (
               <StyledTableRow>
                 <StyledTableCell component="th" scope="row">
