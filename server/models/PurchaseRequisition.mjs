@@ -1,5 +1,3 @@
-// PurchaseRequisition.mjs
-
 import mongoose from "mongoose";
 
 const PurchaseRequisitionSchema = new mongoose.Schema({

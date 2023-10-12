@@ -9,6 +9,7 @@ Login:async (req,res) => {
 
     try{
         const user = await User.findOne({empId:empId})
+        console.log(user);
 
         if(user){
             bcrypt.compare(password,user.password,(err,response) => {
@@ -16,6 +17,10 @@ Login:async (req,res) => {
 
                     if(user.role == "procurement")
                         res.json({type:"procurement",user})
+                    else if(user.role == "accountant")
+                    res.json({type:"accountant",user})
+                    else if(user.role == "senior")
+                    res.json({type:"senior",user})
                 }
             else{
                 res.json("Invalid Password")

@@ -26,3 +26,15 @@ export const createUser = async (req, res) => {
         return res.json({ status: "Error", err });
       });
   };
+
+
+  export const getAllUser = async (req, res) => {
+    User.find()
+      .then((User) => {
+        return res.json(User);
+      })
+      .catch((err) => {
+        console.log({ status: "Error", err });
+        return res.json({ status: "Error", err });
+      });
+  };

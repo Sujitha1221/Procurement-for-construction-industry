@@ -29,7 +29,7 @@ const ViewPurchaseRequisition = () => {
         .get("http://localhost:8080/purchase-requisition/get-all-pr")
         .then((res) => {
           const filteredRequisition = res.data.filter(
-            (requisition) => parseInt(requisition.totalAmount, 10) > 100000
+            (requisition) => parseInt(requisition.totalAmount, 10) < 100000
           );
           setAllRequisition(filteredRequisition);
           setAllRequisitions(res.data);

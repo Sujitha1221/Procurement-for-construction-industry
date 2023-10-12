@@ -4,6 +4,7 @@ import SeniorLayout from "../layouts/SeniorLayout";
 import PurchaseRequisitionLayout from "../layouts/PurchaseRequisitionLayout";
 import OrderLayout from "../layouts/OrderLayout";
 import CommonLayout from "../layouts/Common Layout"; 
+import AccountantLayout from "../layouts/AccountantLayout";
 
 const FrontendRoutes = () => {
   return (
@@ -16,12 +17,15 @@ const FrontendRoutes = () => {
           <Route path="purchaseRequisitionSenior" element={<SeniorLayout />}>
             <Route path="view-requisition" />
           </Route>
+          <Route path="purchaseRequisitionAccountant" element={<AccountantLayout />}>
+            <Route path="view-requisition" />
+          </Route>
           <Route path="purchaseRequisition" element={<PurchaseRequisitionLayout />}>
             <Route path="view-requisition" />
           </Route>
           <Route path="order" element={<OrderLayout />}>
             <Route path="view-order" />
-            <Route path="add-order" />
+            <Route path="add-order/:id" />
           </Route>
         </Routes>
       </Router>

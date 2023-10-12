@@ -18,7 +18,7 @@ const DeliveryDriverLayout = () => {
                         <Routes>
                             <Route>
                                 <Route path='view-order' element={<ViewOrder />} />
-                                <Route path='add-order' element={<AddOrder />} />
+                                <Route path='add-order/:id' element={<AddOrder />} />
                             </Route>
                         </Routes>
                     </div>

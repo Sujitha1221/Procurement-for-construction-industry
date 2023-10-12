@@ -9,6 +9,7 @@ export default function SignIn() {
 
    const  handleSubmit = (e) => {
     e.preventDefault();
+    console.log(empId + " " + password);
     try {
          axios
           .post("http://localhost:8080/login/", {
@@ -27,19 +28,17 @@ export default function SignIn() {
 
             }
             else if (res.data.type === "procurement") {
-              window.localStorage.setItem("AdminInfo",JSON.stringify(res.data.user))
+              window.localStorage.setItem("ProcurementInfo",JSON.stringify(res.data.user))
               window.location.replace("/purchaseRequisition/view-requisition");
 
               
-              alert("Success")
-            } else if (res.data.type === "driver") {
-              window.localStorage.setItem("DriverInfo",JSON.stringify(res.data.driver))
-              window.location.replace("/driver");
+            } else if (res.data.type === "accountant") {
+              window.localStorage.setItem("AccountantInfo",JSON.stringify(res.data.user))
+              window.location.replace("/purchaseRequisitionAccountant");
               
-              alert("Success")
-              
-            }else{
-
+            }else if (res.data.type === "senior"){
+              window.localStorage.setItem("AccountantInfo",JSON.stringify(res.data.user))
+              window.location.replace("/purchaseRequisitionSenior/view-requisition");
             }
           })
           .catch((e) => {
