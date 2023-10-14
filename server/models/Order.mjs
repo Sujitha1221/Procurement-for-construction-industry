@@ -10,12 +10,13 @@ const OrderSchema = new mongoose.Schema({
   supplier: {
     type: String,
     required: true,
-  }
+  },
+  orderStatus: {
+    type: String,
+    default: "Pending",
+  },
 });
 
-const Order = mongoose.model(
-  "Order",
-  OrderSchema
-);
+const Order = mongoose.model("Order", OrderSchema);
 
 export default Order;
