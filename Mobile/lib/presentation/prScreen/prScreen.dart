@@ -39,22 +39,25 @@ class _PRScreenState extends State<PRScreen> {
 
   Future<String> getEmpIdFromLocalStorage() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('empId') ?? ''; // Provide a default value if 'empId' is not found
+    return prefs.getString('empId') ??
+        ''; // Provide a default value if 'empId' is not found
   }
 
   Future<List<Map<String, dynamic>>?> getAllPR(BuildContext context) async {
     try {
       final empid = await getEmpIdFromLocalStorage();
       final response = await client.get(
-        Uri.parse('http://192.168.56.1:8080/purchase-requisition/get-pr-by-empid/$empid'),
+        Uri.parse(
+            'http://192.168.56.1:8080/purchase-requisition/get-pr-by-empid/$empid'),
         headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
         // Explicitly cast the result to the correct type
-        final List<Map<String, dynamic>> prList = (json.decode(response.body) as List)
-            .map((item) => item as Map<String, dynamic>)
-            .toList();
+        final List<Map<String, dynamic>> prList =
+            (json.decode(response.body) as List)
+                .map((item) => item as Map<String, dynamic>)
+                .toList();
         return prList;
       } else {
         // Handle error responses here
@@ -127,7 +130,32 @@ class _PRScreenState extends State<PRScreen> {
               imagePath: ImageConstant.imgGroup10,
               margin: EdgeInsets.fromLTRB(26.h, 16.v, 26.h, 15.v),
               onTap: () async {
-                await removePrefs(context);
+                // Show an alert dialog to confirm logout
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Confirm Logout'),
+                      content: Text('Are you sure you want to log out?'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('Cancel'),
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                        ),
+                        TextButton(
+                          child: Text('OK'),
+                          onPressed: () async {
+                            // User pressed "OK," call the removePrefs function
+                            Navigator.of(context).pop(); // Close the dialog
+                            await removePrefs(context);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
             ),
           ],
@@ -182,33 +210,32 @@ class _PRScreenState extends State<PRScreen> {
                                   ),
                                 ),
                                 Spacer(),
-                               
                               ],
                             ),
                           ),
                           Row(
-                              children: [
-                                Opacity(
-                                  opacity: 0.5,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(bottom: 1.v),
-                                    child: Text(
-                                      "$projectName",
-                                      style: theme.textTheme.headlineSmall,
-                                    ),
+                            children: [
+                              Opacity(
+                                opacity: 0.5,
+                                child: Padding(
+                                  padding: EdgeInsets.only(bottom: 1.v),
+                                  child: Text(
+                                    "$projectName",
+                                    style: theme.textTheme.headlineSmall,
                                   ),
                                 ),
-                                Spacer(),
-                               
-                              ],
-                            ),
-                          
-                          Row( // Another row inside the container
+                              ),
+                              Spacer(),
+                            ],
+                          ),
+                          Row(
+                            // Another row inside the container
                             children: [
                               Opacity(
                                 opacity: 0.5,
                                 child: CustomImageView(
-                                  imagePath: ImageConstant.imgCalendarsilhouette,
+                                  imagePath:
+                                      ImageConstant.imgCalendarsilhouette,
                                   height: 17.adaptSize,
                                   width: 17.adaptSize,
                                   margin: EdgeInsets.only(
@@ -220,7 +247,8 @@ class _PRScreenState extends State<PRScreen> {
                               Opacity(
                                 opacity: 0.5,
                                 child: Padding(
-                                  padding: EdgeInsets.only(bottom: 1.v,left: 7.v),
+                                  padding:
+                                      EdgeInsets.only(bottom: 1.v, left: 7.v),
                                   child: Text(
                                     "$extractedDate",
                                     style: theme.textTheme.headlineSmall,
@@ -230,7 +258,6 @@ class _PRScreenState extends State<PRScreen> {
                               Spacer(),
                               Opacity(
                                 opacity: 0.5,
-                                
                               ),
                               Opacity(
                                 opacity: 0.5,
@@ -257,16 +284,19 @@ class _PRScreenState extends State<PRScreen> {
                               children: [
                                 CustomImageView(
                                   svgPath: ImageConstant.imgRectangle5,
-                                  height: 100.v, // Adjust the height to center the text
+                                  height: 100
+                                      .v, // Adjust the height to center the text
                                   width: 143.h,
                                   alignment: Alignment.topCenter,
-                                  color: getColorForStatus(status), // Set the color based on the status
+                                  color: getColorForStatus(
+                                      status), // Set the color based on the status
                                 ),
                                 Align(
                                   alignment: Alignment.center,
                                   child: Text(
                                     "$status",
-                                    style: CustomTextStyles.headlineSmallWhiteA700,
+                                    style:
+                                        CustomTextStyles.headlineSmallWhiteA700,
                                   ),
                                 ),
                               ],
@@ -314,7 +344,8 @@ class _PRScreenState extends State<PRScreen> {
       case "Order Placed":
         return Colors.blueAccent; // Set to red for rejected status
       default:
-        return Colors.transparent; // Set a default color or handle other statuses
+        return Colors
+            .transparent; // Set a default color or handle other statuses
     }
   }
 }

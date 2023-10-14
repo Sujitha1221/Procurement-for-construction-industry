@@ -143,51 +143,74 @@ class LoginScreen extends StatelessWidget {
   }
 
   Future login(BuildContext context, SiteManager siteManager) async {
-  try {
-    final response = await http.post(
-      Uri.parse('http://192.168.56.1:8080/site-manager/login'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(siteManager.toJson()), // Convert User object to JSON
-    );
-
-    if (response.statusCode == 200) {
-      final responseJson = jsonDecode(response.body);
-      final empid = responseJson['empId'].toString();
-      print(empid);
-      // Successful request
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('empId', empid);
-
-      // Show a success dialog
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Login Successful'),
-            content: Text('You have successfully logged in.'),
-            actions: <Widget>[
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/all_pr_screen');
-                },
-              ),
-            ],
-          );
-        },
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.56.1:8080/site-manager/login'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(siteManager.toJson()), // Convert User object to JSON
       );
-    } else {
-      // Handle error responses here
-      print('Request failed with status: ${response.statusCode}');
-      print('Response body: ${response.body}');
 
-      // Show an error dialog
+      if (response.statusCode == 200) {
+        final responseJson = jsonDecode(response.body);
+        final empid = responseJson['empId'].toString();
+        print(empid);
+        // Successful request
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('empId', empid);
+
+        // Show a success dialog
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Login Successful'),
+              content: Text('You have successfully logged in.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed('/all_pr_screen');
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // Handle error responses here
+        print('Request failed with status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+
+        // Show an error dialog
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Login Failed'),
+              content: Text('Failed to log in. Please check your credentials.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      // Handle network errors or other exceptions here
+
+      // Show a generic error dialog
       showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Login Failed'),
-            content: Text('Failed to log in. Please check your credentials.'),
+            title: Text('Error'),
+            content: Text('An error occurred. Please try again later.'),
             actions: <Widget>[
               TextButton(
                 child: Text('OK'),
@@ -200,28 +223,5 @@ class LoginScreen extends StatelessWidget {
         },
       );
     }
-  } catch (e) {
-    // Handle network errors or other exceptions here
-
-    // Show a generic error dialog
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text('An error occurred. Please try again later.'),
-          actions: <Widget>[
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
-}
-
 }

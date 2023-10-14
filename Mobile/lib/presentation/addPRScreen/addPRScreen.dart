@@ -31,7 +31,7 @@ class PurchaseRequisition {
     return {
       'empId': empId,
       'item': item,
-      'projectName':projectName,
+      'projectName': projectName,
       'quantity': quantity,
       'pricePerUnit': pricePerUnit,
       'totalAmount': totalAmount
@@ -45,8 +45,6 @@ class AddPRScreen extends StatefulWidget {
   _AddPRScreenState createState() => _AddPRScreenState();
 }
 
-
-
 class _AddPRScreenState extends State<AddPRScreen> {
   List<Map<String, dynamic>> projList = [];
   late http.Client client;
@@ -59,7 +57,8 @@ class _AddPRScreenState extends State<AddPRScreen> {
   }
 
   Future<void> fetchProjects() async {
-    final List<Map<String, dynamic>>? fetchedProjList = await getAllProjects(context);
+    final List<Map<String, dynamic>>? fetchedProjList =
+        await getAllProjects(context);
     if (fetchedProjList != null) {
       setState(() {
         projList = fetchedProjList;
@@ -69,22 +68,26 @@ class _AddPRScreenState extends State<AddPRScreen> {
 
   Future<String> getEmpIdFromLocalStorage() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('empId') ?? ''; // Provide a default value if 'empId' is not found
+    return prefs.getString('empId') ??
+        ''; // Provide a default value if 'empId' is not found
   }
 
-  Future<List<Map<String, dynamic>>?> getAllProjects(BuildContext context) async {
+  Future<List<Map<String, dynamic>>?> getAllProjects(
+      BuildContext context) async {
     try {
       final empid = await getEmpIdFromLocalStorage();
       final response = await client.get(
-        Uri.parse('http://192.168.56.1:8080/project/get-project-by-empid/$empid'),
+        Uri.parse(
+            'http://192.168.56.1:8080/project/get-project-by-empid/$empid'),
         headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
         // Explicitly cast the result to the correct type
-        final List<Map<String, dynamic>> projList = (json.decode(response.body) as List)
-            .map((item) => item as Map<String, dynamic>)
-            .toList();
+        final List<Map<String, dynamic>> projList =
+            (json.decode(response.body) as List)
+                .map((item) => item as Map<String, dynamic>)
+                .toList();
         return projList;
       } else {
         // Handle error responses here
@@ -98,14 +101,11 @@ class _AddPRScreenState extends State<AddPRScreen> {
       return null;
     }
   }
-  
 
   TextEditingController nameController = TextEditingController();
   TextEditingController quantityvalueController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final List<String> items = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
 
   // Define a variable to store the selected item
   String? selectedItem;
@@ -118,68 +118,88 @@ class _AddPRScreenState extends State<AddPRScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
-          leadingWidth: 64.h,
-          leading: AppbarImage(
-            imagePath: ImageConstant.imgWorkers,
-            margin: EdgeInsets.only(
-              left: 22.h,
-              top: 7.v,
-              bottom: 7.v,
+            leadingWidth: 64.h,
+            leading: AppbarImage(
+              imagePath: ImageConstant.imgWorkers,
+              margin: EdgeInsets.only(
+                left: 22.h,
+                top: 7.v,
+                bottom: 7.v,
+              ),
             ),
-          ),
-          title: Container(
-            height: 38.99.v,
-            width: 111.h,
-            margin: EdgeInsets.only(left: 9.h),
-            child: Stack(
-              alignment: Alignment.bottomLeft,
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 6.v),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "Build",
-                            style: theme.textTheme.headlineSmall,
-                          ),
-                          TextSpan(
-                            text: "Zone",
-                            style: CustomTextStyles.headlineSmallPrimary,
-                          ),
-                        ],
+            title: Container(
+              height: 38.99.v,
+              width: 111.h,
+              margin: EdgeInsets.only(left: 9.h),
+              child: Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 6.v),
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Build",
+                              style: theme.textTheme.headlineSmall,
+                            ),
+                            TextSpan(
+                              text: "Zone",
+                              style: CustomTextStyles.headlineSmallPrimary,
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.left,
                       ),
-                      textAlign: TextAlign.left,
                     ),
                   ),
-                ),
-                AppbarSubtitle(
-                  text: "S     O     L     U     T     I     O     N     S",
-                  margin: EdgeInsets.only(
-                    left: 15.h,
-                    top: 31.v,
-                    right: 17.h,
+                  AppbarSubtitle(
+                    text: "S     O     L     U     T     I     O     N     S",
+                    margin: EdgeInsets.only(
+                      left: 15.h,
+                      top: 31.v,
+                      right: 17.h,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            AppbarIconbutton(
-              imagePath: ImageConstant.imgGroup10,
-              margin: EdgeInsets.only(
-                left: 20.h,
-                top: 7.v,
-                right: 9.h,
+                ],
               ),
-              onTap: () async {
-                await removePrefs(context);
-              },
             ),
-          ]
-        ),
+            actions: [
+              AppbarImage(
+                imagePath: ImageConstant.imgGroup10,
+                margin: EdgeInsets.fromLTRB(26.h, 16.v, 26.h, 15.v),
+                onTap: () async {
+                  // Show an alert dialog to confirm logout
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('Confirm Logout'),
+                        content: Text('Are you sure you want to log out?'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('Cancel'),
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Close the dialog
+                            },
+                          ),
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () async {
+                              // User pressed "OK," call the removePrefs function
+                              Navigator.of(context).pop(); // Close the dialog
+                              await removePrefs(context);
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ]),
         body: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -202,8 +222,9 @@ class _AddPRScreenState extends State<AddPRScreen> {
                         decoration: IconButtonStyleHelper.outlineBlack,
                         child: CustomImageView(
                           imagePath: ImageConstant.imgGroup6,
-                          onTap: (){
-                            Navigator.of(context).pushReplacementNamed('/all_pr_screen');
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed('/all_pr_screen');
                           },
                         ),
                       ),
@@ -256,95 +277,97 @@ class _AddPRScreenState extends State<AddPRScreen> {
                               hintText: "Item Name",
                             ),
                             SizedBox(height: 35.v),
-                           DropdownButtonFormField<String>(
-  decoration: InputDecoration(
-    hintText: 'Project Name',
-    hintStyle: theme.textTheme.titleLarge,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(15.0),
-      borderSide: BorderSide(
-        color: theme.colorScheme.onPrimaryContainer,
-        width: 1,
-      ),
-    ),
-    filled: true,
-    fillColor: theme.colorScheme.onPrimary,
-    contentPadding: EdgeInsets.all(13.h),
-  ),
-  value: selectedItem,
-  items: projList.map<DropdownMenuItem<String>>((project) {
-    return DropdownMenuItem<String>(
-      value: project['projectName'],
-      child: Text(project['projectName']),
-    );
-  }).toList(),
-  onChanged: (value) {
-    setState(() {
-      selectedItem = value;
-    });
-  },
-  style: theme.textTheme.titleLarge,
-),
-
-SizedBox(height: 35.v),
-
+                            DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                hintText: 'Project Name',
+                                hintStyle: theme.textTheme.titleLarge,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderSide: BorderSide(
+                                    color: theme.colorScheme.onPrimaryContainer,
+                                    width: 1,
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: theme.colorScheme.onPrimary,
+                                contentPadding: EdgeInsets.all(13.h),
+                              ),
+                              value: selectedItem,
+                              items: projList
+                                  .map<DropdownMenuItem<String>>((project) {
+                                return DropdownMenuItem<String>(
+                                  value: project['projectName'],
+                                  child: Text(project['projectName']),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedItem = value;
+                                });
+                              },
+                              style: theme.textTheme.titleLarge,
+                            ),
+                            SizedBox(height: 35.v),
                             CustomTextFormField(
                               controller: quantityvalueController,
                               textInputType: TextInputType.number,
                               hintText: "Quantity",
-                            
                             ),
                             SizedBox(height: 35.v),
                             CustomTextFormField(
                               controller: priceController,
                               hintText: "Price per unit",
                               textInputType: TextInputType.number,
-                           
                             ),
                             SizedBox(height: 71.v),
                             CustomElevatedButton(
-  text: "Request ",
-  onTap: () async {
-    final empid = await getEmpIdFromLocalStorage();
-    final purchaseRequisition = PurchaseRequisition(
-      empId: empid,
-      item: nameController.text,
-      projectName: selectedItem.toString(),
-      quantity: double.parse(quantityvalueController.text),
-      pricePerUnit: double.parse(priceController.text),
-      totalAmount: calculateTotalAmount(),
-    );
+                              text: "Request ",
+                              onTap: () async {
+                                final empid = await getEmpIdFromLocalStorage();
+                                final purchaseRequisition = PurchaseRequisition(
+                                  empId: empid,
+                                  item: nameController.text,
+                                  projectName: selectedItem.toString(),
+                                  quantity: double.parse(
+                                      quantityvalueController.text),
+                                  pricePerUnit:
+                                      double.parse(priceController.text),
+                                  totalAmount: calculateTotalAmount(),
+                                );
 
-    double totalAmount = calculateTotalAmount();
+                                double totalAmount = calculateTotalAmount();
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Submitted successfully'),
-          content: Text("The total amount is Rs. $totalAmount"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop('Cancel');
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                
-                createPR(context, purchaseRequisition);
-                Navigator.of(context).pushReplacementNamed('/all_pr_screen');
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  },
-)
-
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title:
+                                          const Text('Submitted successfully'),
+                                      content: Text(
+                                          "The total amount is Rs. $totalAmount"),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop('Cancel');
+                                          },
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            createPR(
+                                                context, purchaseRequisition);
+                                            Navigator.of(context)
+                                                .pushReplacementNamed(
+                                                    '/all_pr_screen');
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            )
                           ],
                         ),
                       ),
@@ -411,12 +434,9 @@ SizedBox(height: 35.v),
     return price * quantity;
   }
 
-
-
-    Future<void> removePrefs(BuildContext context) async {
+  Future<void> removePrefs(BuildContext context) async {
     var prefs = await SharedPreferences.getInstance();
     prefs.remove('empId');
     Navigator.of(context).pushReplacementNamed('/login_screen');
   }
 }
-
