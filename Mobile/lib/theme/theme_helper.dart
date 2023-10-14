@@ -162,9 +162,12 @@ class ColorSchemes {
 class PrimaryColors {
   // Amber
   Color get amber300 => Color(0XFFFFD15B);
-
+   Color get gray100 => Color(0XFFF7F7F7);
+Color get orange500 => Color(0XFFFE9901);
   // Black
   Color get black900 => Color(0XFF000000);
+  Color get whiteA700 => Color(0XFFFFFFFF);
+  Color get blueGray100 => Color(0XFFD9D9D9);
 }
 
 PrimaryColors get appTheme => ThemeHelper().themeColor();

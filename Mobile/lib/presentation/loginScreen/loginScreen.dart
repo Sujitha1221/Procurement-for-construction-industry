@@ -6,22 +6,16 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class SiteManager {
   String empId;
   String password;
- 
- SiteManager(
-      {required this.empId,
-      required this.password
-  });
+
+  SiteManager({required this.empId, required this.password});
 
   Map<String, dynamic> toJson() {
     return {
       'empId': empId,
       'password': password,
-  
     };
   }
 }
@@ -105,23 +99,20 @@ class LoginScreen extends StatelessWidget {
                   obscureText: true,
                 ),
                 CustomElevatedButton(
-                  text: "Sign in",
-                  margin: EdgeInsets.only(
-                    left: 38.h,
-                    top: 61.v,
-                    right: 38.h,
-                  ),
-                  onTap: () {
-                   
+                    text: "Sign in",
+                    margin: EdgeInsets.only(
+                      left: 38.h,
+                      top: 61.v,
+                      right: 38.h,
+                    ),
+                    onTap: () {
                       final siteManager = SiteManager(
                         empId: employeeidlabelController.text,
                         password: passwordController.text,
                       );
 
-                      login(context,siteManager);
-                    }
-                  
-                ),
+                      login(context, siteManager);
+                    }),
                 SizedBox(height: 40.v),
                 Opacity(
                   opacity: 0.5,
@@ -132,22 +123,17 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 9.v),
                 GestureDetector(
-  onTap: () {
-    // Add your onTap logic here
-    Navigator.of(context).pushReplacementNamed('/register_screen');
-  },
-  child: Text(
-    'Sign up',
-  style: theme.textTheme.headlineSmall,
-  ),
-)
-
-            ,
-                SizedBox(height: 17.v),
-                Text(
-                  "Forgotten password?",
-                  style: CustomTextStyles.titleLargePrimary,
+                  onTap: () {
+                    // Add your onTap logic here
+                    Navigator.of(context)
+                        .pushReplacementNamed('/register_screen');
+                  },
+                  child: Text(
+                    'Sign up',
+                    style: theme.textTheme.headlineSmall,
+                  ),
                 ),
+                SizedBox(height: 17.v),
               ],
             ),
           ),
@@ -156,9 +142,8 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Future login(BuildContext context,SiteManager siteManager) async {
- 
-      try {
+  Future login(BuildContext context, SiteManager siteManager) async {
+  try {
     final response = await http.post(
       Uri.parse('http://192.168.56.1:8080/site-manager/login'),
       headers: {'Content-Type': 'application/json'},
@@ -166,23 +151,77 @@ class LoginScreen extends StatelessWidget {
     );
 
     if (response.statusCode == 200) {
+      final responseJson = jsonDecode(response.body);
+      final empid = responseJson['empId'].toString();
+      print(empid);
       // Successful request
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('empId', response.body);
-      Navigator.of(context).pushReplacementNamed('/register_screen');
-      print( response.body);
-      
+      await prefs.setString('empId', empid);
 
+      // Show a success dialog
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Login Successful'),
+            content: Text('You have successfully logged in.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed('/all_pr_screen');
+                },
+              ),
+            ],
+          );
+        },
+      );
     } else {
       // Handle error responses here
       print('Request failed with status: ${response.statusCode}');
       print('Response body: ${response.body}');
-      throw Exception('Failed to login');
+
+      // Show an error dialog
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Login Failed'),
+            content: Text('Failed to log in. Please check your credentials.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   } catch (e) {
     // Handle network errors or other exceptions here
-    
+
+    // Show a generic error dialog
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('An error occurred. Please try again later.'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
-  
 }
+
 }
