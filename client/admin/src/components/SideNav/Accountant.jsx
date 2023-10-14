@@ -25,12 +25,12 @@ const AccountantSideNav = () => {
     {
       name: "View All Received Invoices",
       icon: faMoneyBill,
-      link: "/supplier/view-orders",
+      link: "/accountant/view-invoices",
     },
     {
       name: "Make Payment",
       icon: faCreditCard,
-      link: "/supplier/approved-orders",
+      link: "/accountant/approved-invoices",
     },
   ];
 

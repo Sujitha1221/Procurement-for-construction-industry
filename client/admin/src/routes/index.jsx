@@ -20,7 +20,9 @@ const FrontendRoutes = () => {
             <Route path="view-requisition" />
           </Route>
           <Route path="accountant" element={<AccountantLayout />}>
-            <Route path="view-requisition" />
+            <Route path="view-invoices" />
+            <Route path="approved-invoices" />
+            <Route path="make-payment/:id" />
           </Route>
           <Route
             path="purchaseRequisition"

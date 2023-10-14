@@ -9,6 +9,7 @@ import LoginRouter from "./routes/LoginRoute.mjs";
 import OrderRouter from "./routes/OrderRoute.mjs";
 import AccountantRouter from "./routes/AccountantRoute.mjs";
 import InvoiceRouter from "./routes/InvoiceRoute.mjs";
+import PaymentRouter from "./routes/PaymentRoute.mjs";
 
 const app = express();
 const PORT = process.env.PORT || "8080";
@@ -29,6 +30,7 @@ app.use("/user", UserRouter);
 app.use("/order", OrderRouter);
 app.use("/accountant", AccountantRouter);
 app.use("/invoice", InvoiceRouter);
+app.use("/payment", PaymentRouter);
 
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);

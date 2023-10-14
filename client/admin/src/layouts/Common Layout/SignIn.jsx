@@ -32,7 +32,7 @@ export default function SignIn() {
               "AccountantInfo",
               JSON.stringify(res.data.user)
             );
-            window.location.replace("/purchaseRequisitionAccountant");
+            window.location.replace("/accountant");
           } else if (res.data.type === "senior") {
             window.localStorage.setItem(
               "AccountantInfo",

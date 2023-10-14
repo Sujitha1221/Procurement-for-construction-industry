@@ -37,6 +37,10 @@ const InvoiceSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  invoiceStatus: {
+    type: String,
+    default: "Invoice sent",
+  },
 });
 
 const Invoice = mongoose.model("Invoice", InvoiceSchema);
