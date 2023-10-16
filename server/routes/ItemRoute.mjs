@@ -8,6 +8,6 @@ import {
 const route = express.Router();
 
 route.post("/add-items", addItems);
-Router.get("/get-items",getAllItems);
+route.get("/get-items",getAllItems);
 
 export default route;
