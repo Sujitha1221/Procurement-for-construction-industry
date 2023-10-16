@@ -1,6 +1,6 @@
 import Route from "express";
 import {
-  createInvoice,
+  generateInvoice,
   getInvoicesByAccountant,
   updateStatus,
   getInvoiceDetailsById,
@@ -8,7 +8,7 @@ import {
 
 const InvoiceRouter = Route();
 
-InvoiceRouter.post("/add-invoice", createInvoice);
+InvoiceRouter.post("/add-invoice", generateInvoice);
 InvoiceRouter.get("/get-invoices/:accountantId", getInvoicesByAccountant);
 InvoiceRouter.put("/update-invoice-status/:invoiceId", updateStatus);
 InvoiceRouter.get("/get-invoice-id/:invoiceId", getInvoiceDetailsById);

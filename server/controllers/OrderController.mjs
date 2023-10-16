@@ -2,7 +2,7 @@
 
 import Order from "../models/Order.mjs";
 
-export const addOrder = async (req, res) => {
+export const addItems = async (req, res) => {
   const { purchaseRequisition, supplier } = req.body;
 
   try {

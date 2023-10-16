@@ -1,6 +1,6 @@
 import Invoice from "../models/Invoice.mjs";
 
-export const createInvoice = async (req, res) => {
+export const generateInvoice = async (req, res) => {
   const {
     orderId,
     empId,
@@ -22,7 +22,7 @@ export const createInvoice = async (req, res) => {
       totalAmount,
       accountantId,
       accountantEmail,
-      dateTime: new Date(),
+      issuedDate: new Date(),
     });
 
     const savedInvoice = await newInvoice.save();

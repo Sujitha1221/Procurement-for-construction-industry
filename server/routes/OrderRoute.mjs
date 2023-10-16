@@ -1,6 +1,6 @@
 import Router from "express";
 import {
-  addOrder,
+  addItems,
   getOrdersBySupplier,
   updateStatus,
   getOrderDetails,
@@ -8,7 +8,7 @@ import {
 } from "../controllers/OrderController.mjs";
 const OrderRouter = Router();
 
-OrderRouter.post("/add-order", addOrder);
+OrderRouter.post("/add-order", addItems);
 OrderRouter.get("/get-orders/:supplierId", getOrdersBySupplier);
 OrderRouter.put("/:orderId/update-status", updateStatus);
 OrderRouter.get("/get-order/:orderId", getOrderDetails);

@@ -33,7 +33,7 @@ const InvoiceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  dateTime: {
+  issuedDate: {
     type: Date,
     required: true,
   },

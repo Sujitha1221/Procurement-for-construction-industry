@@ -1,7 +1,7 @@
 import Payment from "../models/Payment.mjs";
 
 // Controller function to add a payment
-export const addPayment = async (req, res) => {
+export const makePayment = async (req, res) => {
   try {
     const { invoiceId, orderId, item, quantity, totalAmount, CardNumber } =
       req.body;
