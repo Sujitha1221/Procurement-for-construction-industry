@@ -316,7 +316,7 @@ class _AddPRScreenState extends State<AddPRScreen> {
                             SizedBox(height: 35.v),
                             CustomTextFormField(
                               controller: priceController,
-                              hintText: "Approximated price per unit",
+                              hintText: "Price per unit",
                               textInputType: TextInputType.number,
                             ),
                             SizedBox(height: 71.v),

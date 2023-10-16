@@ -6,6 +6,7 @@ import logger from "./utils/logger.mjs";
 import PurchaseRequisitionRoute from "./routes/PurchaseRequisitionRoute.mjs";
 import SiteManagerRoute from './routes/SiteManagerRoute.mjs'
 import ProjectRoute from './routes/ProjectRoute.mjs'
+import ItemRoute from './routes/ItemRoute.mjs'
 
 const app = express();
 const PORT = process.env.PORT || "8080";
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 app.use("/purchase-requisition", PurchaseRequisitionRoute);
 app.use("/site-manager",SiteManagerRoute);
 app.use('/project',ProjectRoute);
+app.use('/item',ItemRoute);
 
 
 
