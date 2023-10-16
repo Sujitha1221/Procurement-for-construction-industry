@@ -14,3 +14,14 @@ export const addItems = async (req, res) => {
     console.log({ status: "Error", err });
   }
 };
+
+export const getAllItems =  async (req, res) => {
+    try {
+      const items = await Item.find();
+      res.status(200).json(items);
+      logger.info(`Item details fetched`);
+    } catch (error) {
+      res.status(500).json({ message: error });
+      logger.error(`Error getting all items ${error.message}`);
+    }
+  };

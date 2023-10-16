@@ -1,11 +1,13 @@
 import express from 'express';
 
 import {
-  addItems
+  addItems,
+  getAllItems
 } from '../controllers/ItemController.mjs';
 
 const route = express.Router();
 
 route.post("/add-items", addItems);
+Router.get("/get-items",getAllItems);
 
 export default route;
