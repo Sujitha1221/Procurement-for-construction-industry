@@ -78,7 +78,7 @@ class _AddPRScreenState extends State<AddPRScreen> {
       final empid = await getEmpIdFromLocalStorage();
       final response = await client.get(
         Uri.parse(
-            'http://192.168.56.1:8080/project/get-project-by-empid/$empid'),
+            'http://192.168.8.186:8080/project/get-project-by-empid/$empid'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -395,7 +395,7 @@ class _AddPRScreenState extends State<AddPRScreen> {
       BuildContext context, PurchaseRequisition purchaseRequisition) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.56.1:8080/purchase-requisition/add-items'),
+        Uri.parse('http://192.168.8.186:8080/purchase-requisition/add-items'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(
             purchaseRequisition.toJson()), // Convert User object to JSON

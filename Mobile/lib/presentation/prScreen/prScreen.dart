@@ -9,6 +9,7 @@ import 'package:build_zone/widgets/app_bar/appbar_image.dart';
 import 'package:build_zone/widgets/app_bar/appbar_image_1.dart';
 import 'package:build_zone/widgets/app_bar/appbar_subtitle.dart';
 import 'package:build_zone/widgets/app_bar/custom_app_bar.dart';
+import 'package:build_zone/widgets/custom_elevated_button.dart';
 
 class PRScreen extends StatefulWidget {
   PRScreen({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _PRScreenState extends State<PRScreen> {
       final empid = await getEmpIdFromLocalStorage();
       final response = await client.get(
         Uri.parse(
-            'http://192.168.56.1:8080/purchase-requisition/get-pr-by-empid/$empid'),
+            'http://192.168.8.186:8080/purchase-requisition/get-pr-by-empid/$empid'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -302,6 +303,16 @@ class _PRScreenState extends State<PRScreen> {
                               ],
                             ),
                           ),
+                          CustomElevatedButton(
+                            text: "Delivery Advice Note",
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/concern_screen');
+                            },
+                            buttonTextStyle: TextStyle(fontSize: 12.0),
+                            width: 150.0,
+                            alignment: Alignment.center,
+                          )
                         ],
                       ),
                     );
