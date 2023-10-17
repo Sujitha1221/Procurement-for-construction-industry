@@ -16,7 +16,7 @@ class PurchaseRequisition {
   String item;
   String projectName;
   double quantity;
-  double pricePerUnit;
+  double unitPrice;
   double totalAmount;
 
   PurchaseRequisition(
@@ -24,7 +24,7 @@ class PurchaseRequisition {
       required this.item,
       required this.projectName,
       required this.quantity,
-      required this.pricePerUnit,
+      required this.unitPrice,
       required this.totalAmount});
 
   Map<String, dynamic> toJson() {
@@ -33,7 +33,7 @@ class PurchaseRequisition {
       'item': item,
       'projectName': projectName,
       'quantity': quantity,
-      'pricePerUnit': pricePerUnit,
+      'unitPrice': unitPrice,
       'totalAmount': totalAmount
     };
   }
@@ -47,6 +47,8 @@ class AddPRScreen extends StatefulWidget {
 
 class _AddPRScreenState extends State<AddPRScreen> {
   List<Map<String, dynamic>> projList = [];
+  List<Map<String, dynamic>> itemList = [];
+
   late http.Client client;
 
   @override
@@ -54,6 +56,7 @@ class _AddPRScreenState extends State<AddPRScreen> {
     super.initState();
     client = http.Client();
     fetchProjects();
+    fetchItems();
   }
 
   Future<void> fetchProjects() async {
@@ -62,6 +65,16 @@ class _AddPRScreenState extends State<AddPRScreen> {
     if (fetchedProjList != null) {
       setState(() {
         projList = fetchedProjList;
+      });
+    }
+  }
+
+  Future<void> fetchItems() async {
+    final List<Map<String, dynamic>>? fetchedItemList =
+        await getAllItems(context);
+    if (fetchedItemList != null) {
+      setState(() {
+        itemList = fetchedItemList;
       });
     }
   }
@@ -102,12 +115,44 @@ class _AddPRScreenState extends State<AddPRScreen> {
     }
   }
 
+  Future<List<Map<String, dynamic>>?> getAllItems(
+      BuildContext context) async {
+    try {
+      
+      final response = await client.get(
+        Uri.parse(
+            'http://192.168.56.1:8080/item/get-items'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        // Explicitly cast the result to the correct type
+        final List<Map<String, dynamic>> itemList =
+            (json.decode(response.body) as List)
+                .map((item) => item as Map<String, dynamic>)
+                .toList();
+        return itemList;
+      } else {
+        // Handle error responses here
+        print('Request failed with status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        throw Exception('Failed to fetch purchase requisitions');
+      }
+    } catch (e) {
+      // Handle network errors or other exceptions here
+      print('Error: $e');
+      return null;
+    }
+  }
+
+
   TextEditingController nameController = TextEditingController();
   TextEditingController quantityvalueController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   // Define a variable to store the selected item
+  String? selectedProject;
   String? selectedItem;
 
   @override
@@ -270,12 +315,9 @@ class _AddPRScreenState extends State<AddPRScreen> {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(height: 29.v),
-                            CustomTextFormField(
-                              controller: nameController,
-                              textInputType: TextInputType.text,
-                              hintText: "Item Name",
-                            ),
+                            
+                            
+                            
                             SizedBox(height: 35.v),
                             DropdownButtonFormField<String>(
                               decoration: InputDecoration(
@@ -292,7 +334,7 @@ class _AddPRScreenState extends State<AddPRScreen> {
                                 fillColor: theme.colorScheme.onPrimary,
                                 contentPadding: EdgeInsets.all(13.h),
                               ),
-                              value: selectedItem,
+                              value: selectedProject,
                               items: projList
                                   .map<DropdownMenuItem<String>>((project) {
                                 return DropdownMenuItem<String>(
@@ -302,10 +344,53 @@ class _AddPRScreenState extends State<AddPRScreen> {
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
-                                  selectedItem = value;
+                                  selectedProject = value;
                                 });
                               },
                               style: theme.textTheme.titleLarge,
+                            ),
+                            SizedBox(height: 35.v),
+                            DropdownButtonFormField<String>(
+  decoration: InputDecoration(
+    hintText: 'Item Name',
+    hintStyle: theme.textTheme.titleLarge,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15.0),
+      borderSide: BorderSide(
+        color: theme.colorScheme.onPrimaryContainer,
+        width: 1,
+      ),
+    ),
+    filled: true,
+    fillColor: theme.colorScheme.onPrimary,
+    contentPadding: EdgeInsets.all(13.h),
+  ),
+  value: selectedItem,
+  items: itemList
+      .map<DropdownMenuItem<String>>((item) {
+    return DropdownMenuItem<String>(
+      value: item['itemName'],
+      child: Text(item['itemName']),
+    );
+  }).toList(),
+  onChanged: (value) {
+    setState(() {
+      selectedItem = value;
+
+      // Update the priceController with the selected item's price
+      // You need to find the item's price based on the selected item name
+      final selectedPrice = itemList
+          .firstWhere((item) => item['itemName'] == value)['unitPrice'];
+      priceController.text = selectedPrice.toString();
+    });
+  },
+  style: theme.textTheme.titleLarge,
+),SizedBox(height: 35.v),
+                            CustomTextFormField(
+                              controller: priceController,
+                              textInputType: TextInputType.text,
+                              hintText: "Unit Price",
+                              enabled: false,
                             ),
                             SizedBox(height: 35.v),
                             CustomTextFormField(
@@ -314,23 +399,17 @@ class _AddPRScreenState extends State<AddPRScreen> {
                               hintText: "Quantity",
                             ),
                             SizedBox(height: 35.v),
-                            CustomTextFormField(
-                              controller: priceController,
-                              hintText: "Price per unit",
-                              textInputType: TextInputType.number,
-                            ),
-                            SizedBox(height: 71.v),
                             CustomElevatedButton(
                               text: "Request ",
                               onTap: () async {
                                 final empid = await getEmpIdFromLocalStorage();
                                 final purchaseRequisition = PurchaseRequisition(
                                   empId: empid,
-                                  item: nameController.text,
-                                  projectName: selectedItem.toString(),
+                                  item: selectedItem.toString(),
+                                  projectName: selectedProject.toString(),
                                   quantity: double.parse(
                                       quantityvalueController.text),
-                                  pricePerUnit:
+                                  unitPrice:
                                       double.parse(priceController.text),
                                   totalAmount: calculateTotalAmount(),
                                 );
@@ -392,29 +471,48 @@ class _AddPRScreenState extends State<AddPRScreen> {
   }
 
   Future createPR(
-      BuildContext context, PurchaseRequisition purchaseRequisition) async {
-    try {
-      final response = await http.post(
-        Uri.parse('http://192.168.56.1:8080/purchase-requisition/add-items'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(
-            purchaseRequisition.toJson()), // Convert User object to JSON
-      );
+  BuildContext context, PurchaseRequisition purchaseRequisition) async {
+  try {
+    final response = await http.post(
+      Uri.parse('http://192.168.56.1:8080/purchase-requisition/add-items'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(purchaseRequisition.toJson()),
+    );
 
-      if (response.statusCode == 200) {
-        // Successful request
-        Navigator.of(context).pushReplacementNamed('/all_pr_screen');
-        print(response.body);
-      } else {
-        // Handle error responses here
-        print('Request failed with status: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        throw Exception('Failed to create');
-      }
-    } catch (e) {
-      // Handle network errors or other exceptions here
+    if (response.statusCode == 200) {
+      // Successful request
+      // Show an AlertDialog
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Success'),
+            content: Text('Purchase Requisition created successfully!'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  // Close the dialog
+                  Navigator.of(context).pop();
+                  // Navigate to 'all_pr_screen'
+                  Navigator.of(context).pushReplacementNamed('/all_pr_screen');
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      // Handle error responses here
+      print('Request failed with status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      throw Exception('Failed to create');
     }
+  } catch (e) {
+    // Handle network errors or other exceptions here
   }
+}
+
 
   double calculateTotalAmount() {
     // Get the price and quantity as strings from the controllers

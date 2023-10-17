@@ -1,4 +1,5 @@
 import Item from "../models/Item.mjs";
+import logger from "../utils/logger.mjs";
 
 export const addItems = async (req, res) => {
   const { itemName,unitPrice } = req.body;
@@ -15,13 +16,14 @@ export const addItems = async (req, res) => {
   }
 };
 
-export const getAllItems =  async (req, res) => {
+export const getAllItems = async (req, res) => {
     try {
       const items = await Item.find();
       res.status(200).json(items);
       logger.info(`Item details fetched`);
     } catch (error) {
-      res.status(500).json({ message: error });
       logger.error(`Error getting all items ${error.message}`);
+      res.status(500).json({ message: error.message });
     }
   };
+  

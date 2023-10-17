@@ -18,7 +18,7 @@ const PurchaseRequisitionSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  pricePerUnit: {
+  unitPrice: {
     type: Number,
     required: true,
   },
