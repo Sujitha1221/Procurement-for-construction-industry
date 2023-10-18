@@ -3,14 +3,14 @@
 import PurchaseRequisition from '../models/PurchaseRequisition.mjs';
 
 export const addItems = async (req, res) => {
-    const { empId, item, quantity, pricePerUnit, totalAmount, approvalStatus } = req.body;
+    const { empId, item, quantity, unitPrice, totalAmount, approvalStatus } = req.body;
 
     try {
         const purchaseRequisition = await PurchaseRequisition.create({
             empId,
             item,
             quantity,
-            pricePerUnit,
+            unitPrice,
             totalAmount,
             approvalStatus,
             reason: '',

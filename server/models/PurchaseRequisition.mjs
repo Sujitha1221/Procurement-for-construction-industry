@@ -13,7 +13,7 @@ const PurchaseRequisitionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  pricePerUnit: {
+  unitPrice: {
     type: String,
     required: true,
   },

@@ -117,7 +117,7 @@ const AddOrder = () => {
           <TextField
               label="Price Per Unit"
               defaultValue=" "
-              value={requisitions.pricePerUnit}
+              value={requisitions.unitPrice}
               variant="outlined"
               style={{ width: "100%" }}
               readonly
