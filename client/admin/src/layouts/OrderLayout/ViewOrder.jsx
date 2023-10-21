@@ -13,7 +13,6 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import axios from "axios";
 
 const ViewOrder = () => {
-
   const [requisitions, setAllRequisition] = useState([]);
 
   useEffect(() => {
@@ -66,39 +65,39 @@ const ViewOrder = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-          {requisitions
-            .filter((key) => {
-              const status = (key.approvalStatus || "").toLowerCase();
-              return (
-                status.includes("approved")
-              );
-            })
-            .map((requisition) => (
-              <StyledTableRow>
-                <StyledTableCell component="th" scope="row">
-                  {requisition._id}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {requisition.item}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {requisition.quantity}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {requisition.totalAmount}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-                  {requisition.approvalStatus}
-                </StyledTableCell>
-                <StyledTableCell align="right">
-              <Link to={{pathname: `/order/add-order/${requisition._id}`}}>
-                  <button className="bg-transparent text-yellow-600 border-yellow-400 hover:bg-yellow-500 hover:text-white font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                    Make order
-                  </button>
-                </Link>
-              </StyledTableCell>
-              </StyledTableRow>
-))}
+            {requisitions
+              .filter((key) => {
+                const status = (key.approvalStatus || "").toLowerCase();
+                return status.includes("approved");
+              })
+              .map((requisition) => (
+                <StyledTableRow key={requisition._id}>
+                  <StyledTableCell component="th" scope="row">
+                    {requisition._id}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {requisition.item}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {requisition.quantity}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {requisition.totalAmount}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {requisition.approvalStatus}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    <Link
+                      to={{ pathname: `/order/add-order/${requisition._id}` }}
+                    >
+                      <button className="bg-transparent text-yellow-600 border-yellow-400 hover:bg-yellow-500 hover:text-white font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                        Make order
+                      </button>
+                    </Link>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

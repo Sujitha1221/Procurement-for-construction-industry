@@ -14,7 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { Modal } from "antd";
 
-const ViewPurchaseRequisition = () => {
+const viewOrder = () => {
   const [visible, setVisible] = useState(false);
   const [orders, setAllOrder] = useState([]);
   const [allOrders, setAllOrders] = useState([]);
@@ -68,7 +68,7 @@ const ViewPurchaseRequisition = () => {
     },
   }));
 
-  function approveRequisition(objId) {
+  function approveOrder(objId) {
     // Send a PUT request to update the order status to "Approved"
     axios
       .put(`http://localhost:8080/order/${objId}/update-status`, {
@@ -84,7 +84,7 @@ const ViewPurchaseRequisition = () => {
       });
   }
 
-  function rejectRequisition() {
+  function rejectOrder() {
     if (!reason) {
       setErrors("Please provide a reason");
       return;
@@ -126,28 +126,28 @@ const ViewPurchaseRequisition = () => {
                 const status = (key.orderStatus || "").toLowerCase();
                 return status.includes("pending");
               })
-              .map((requisition) => (
+              .map((order) => (
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
-                    {requisition._id}
+                    {order._id}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {requisition.purchaseRequisition?.item}
+                    {order.purchaseRequisition?.item}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {requisition.purchaseRequisition?.quantity}
+                    {order.purchaseRequisition?.quantity}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {requisition.purchaseRequisition?.totalAmount}
+                    {order.purchaseRequisition?.totalAmount}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {requisition.orderStatus}
+                    {order.orderStatus}
                   </StyledTableCell>
                   <StyledTableCell align="right">
                     <button
                       className="g-transparent text-yellow-600 border-yellow-400 hover:bg-yellow-500 hover:text-white font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                       onClick={() => {
-                        approveRequisition(requisition._id);
+                        approveOrder(order._id);
                       }}
                     >
                       <CheckIcon />
@@ -158,7 +158,7 @@ const ViewPurchaseRequisition = () => {
                       className="bg-transparent text-red-600 border-red-600 hover:bg-red-600 hover:text-white font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded"
                       onClick={() => {
                         setVisible(true);
-                        setSelectedId(requisition._id);
+                        setSelectedId(order._id);
                       }}
                     >
                       <CloseIcon />
@@ -182,22 +182,22 @@ const ViewPurchaseRequisition = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {allOrders.map((requisition) => (
+            {allOrders.map((order) => (
               <StyledTableRow>
                 <StyledTableCell component="th" scope="row">
-                  {requisition._id}
+                  {order._id}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  {requisition.purchaseRequisition?.item}
+                  {order.purchaseRequisition?.item}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  {requisition.purchaseRequisition?.quantity}
+                  {order.purchaseRequisition?.quantity}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  {requisition.purchaseRequisition?.totalAmount}
+                  {order.purchaseRequisition?.totalAmount}
                 </StyledTableCell>
                 <StyledTableCell align="right">
-                  {requisition.orderStatus}
+                  {order.orderStatus}
                 </StyledTableCell>
               </StyledTableRow>
             ))}
@@ -217,10 +217,10 @@ const ViewPurchaseRequisition = () => {
             />
             <button
               type="submit"
-              onClick={rejectRequisition}
+              onClick={rejectOrder}
               className="g-transparent mt-5 text-yellow-600 border-yellow-400 hover:bg-yellow-500 hover:text-white font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded"
             >
-              Reject Requisition
+              Reject Order
             </button>
 
             <div class="col-span-2 flex justify-center pt-5">
@@ -239,4 +239,4 @@ const ViewPurchaseRequisition = () => {
   );
 };
 
-export default ViewPurchaseRequisition;
+export default viewOrder;
