@@ -7,7 +7,6 @@ const MakePayment = () => {
   const { id } = useParams();
   const [invoices, setAllInvoices] = useState([]);
   const [supplier, setAllSupplier] = useState([]);
-  const [accountant, setAccountant] = useState(null);
   const [cardNumber, setCardNumber] = useState("");
 
   useEffect(() => {
