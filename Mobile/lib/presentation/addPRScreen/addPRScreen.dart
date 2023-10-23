@@ -493,7 +493,7 @@ class _AddPRScreenState extends State<AddPRScreen> {
                 child: Text('OK'),
                 onPressed: () {
                   // Close the dialog
-                  Navigator.of(context).pop();
+                 
                   // Navigate to 'all_pr_screen'
                   Navigator.of(context).pushReplacementNamed('/all_pr_screen');
                 },

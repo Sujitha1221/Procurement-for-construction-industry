@@ -71,7 +71,7 @@ const ViewPurchaseRequisitionSenior = () => {
       })
       .then((res) => {
         if (res.data != null)
-          window.location.replace("http://localhost:3000/purchaseRequisition/view-requisition");
+          window.location.replace("http://localhost:3000/purchaseRequisitionSenior/view-requisition");
       })
       .catch((err) => {
         console.error("Error : " + err.message);
@@ -94,7 +94,7 @@ const ViewPurchaseRequisitionSenior = () => {
       })
       .then((res) => {
         if (res.data != null)
-          window.location.replace("http://localhost:3000/purchaseRequisition/view-requisition");
+          window.location.replace("http://localhost:3000/purchaseRequisitionSenior/view-requisition");
       })
       .catch((err) => {
         console.error("Error : " + err.message);
