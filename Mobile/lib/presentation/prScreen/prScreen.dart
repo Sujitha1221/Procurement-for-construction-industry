@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:build_zone/presentation/concernScreen/concernScreen.dart';
+import 'package:build_zone/presentation/deliveryAdviceNoteScreen/deliveryAdviceNoteScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -136,7 +138,10 @@ class _PRScreenState extends State<PRScreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: Text('Confirm Logout'),
+                      title: Text(
+                        'Confirm Logout',
+                        textAlign: TextAlign.center,
+                      ),
                       content: Text('Are you sure you want to log out?'),
                       actions: <Widget>[
                         TextButton(
@@ -176,6 +181,7 @@ class _PRScreenState extends State<PRScreen> {
                   itemCount: prList.length,
                   itemBuilder: (context, index) {
                     Map<String, dynamic> pr = prList[index];
+                    String id = pr['_id'] ?? "Unknown ID";
                     String itemName = pr['item'] ?? "Unknown Product";
                     String date = pr['dateTime'] ?? "Unknown";
                     String extractedDate = date.substring(0, 10);
@@ -303,16 +309,22 @@ class _PRScreenState extends State<PRScreen> {
                               ],
                             ),
                           ),
-                          CustomElevatedButton(
-                            text: "Delivery Advice Note",
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/concern_screen');
-                            },
-                            buttonTextStyle: TextStyle(fontSize: 12.0),
-                            width: 150.0,
-                            alignment: Alignment.center,
-                          )
+                          Visibility(
+                              visible: (status == 'Approved'),
+                              child: CustomElevatedButton(
+                                text: "Delivery Advice Note",
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          DeliveryAdviceNoteScreen(id: "$id"),
+                                    ),
+                                  );
+                                },
+                                buttonTextStyle: TextStyle(fontSize: 12.0),
+                                width: 150.0,
+                                alignment: Alignment.center,
+                              ))
                         ],
                       ),
                     );

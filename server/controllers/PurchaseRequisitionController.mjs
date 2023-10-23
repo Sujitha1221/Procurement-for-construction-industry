@@ -35,10 +35,10 @@ export const getAllPurchaseRequisitions = async (req, res) => {
 }
 
 export const getPurchaseRequisitionById = async (req, res) => {
-    const { _id } = req.params;
+    const { id } = req.params;
 
     try {
-        const purchaseRequisition = await PurchaseRequisition.findById(_id);
+        const purchaseRequisition = await PurchaseRequisition.findById(id);
         res.json(purchaseRequisition);
     } catch (err) {
         console.log({ status: 'Error', err });
