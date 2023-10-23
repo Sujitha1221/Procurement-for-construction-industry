@@ -1,6 +1,6 @@
 // PurchaseRequisitionRoute.mjs
 
-import express from 'express';
+import express from "express";
 
 import {
   addItems,
@@ -8,7 +8,7 @@ import {
   getPurchaseRequisitionById,
   getPurchaseRequisitionByEmpId,
   updateItems,
-} from '../controllers/PurchaseRequisitionController.mjs';
+} from "../controllers/PurchaseRequisitionController.mjs";
 
 const route = express.Router();
 
