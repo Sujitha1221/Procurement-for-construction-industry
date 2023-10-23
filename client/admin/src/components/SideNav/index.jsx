@@ -20,24 +20,7 @@ const SideNav = () => {
     }
 
     const adminNavigation = [
-        {
-            name: "Dashboard",
-            icon: faChartSimple,
-            link: "/"
-        },
-
-        {
-            name: "User Management",
-            icon: faUsers,
-            link: "/users"
-        },
-
-        {
-            name: 'Product Management',
-            icon: faCartShopping,
-            link: '/products'
-        }, 
-
+        
         {
             name: 'Purchase Requisition',
             icon: faTruck,

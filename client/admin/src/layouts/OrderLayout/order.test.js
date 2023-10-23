@@ -17,7 +17,7 @@ describe("<ViewOrder />", () => {
   });
 
   it("fetches and displays approved requisitions", async () => {
-    // Sample data for the mock axios response
+
     const mockData = [
       {
         _id: "1",
@@ -45,13 +45,11 @@ describe("<ViewOrder />", () => {
       </MemoryRouter>
     );
 
-    // Wait for axios to resolve and component to re-render
+    
     await waitFor(() => screen.getByText("TestItem1"));
 
-    // Check that only approved requisition is rendered
     expect(screen.getByText("TestItem1")).toBeInTheDocument();
     expect(screen.queryByText("TestItem2")).not.toBeInTheDocument();
 
-    // You can add more assertions based on the behavior you expect.
   });
 });

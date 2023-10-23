@@ -3,13 +3,16 @@
 import PurchaseRequisition from "../models/PurchaseRequisition.mjs";
 
 export const addItems = async (req, res) => {
-  const { empId, item, quantity, unitPrice, totalAmount, approvalStatus } =
+  const { empId, item, projectName, quantity, unitPrice, totalAmount } =
     req.body;
+
+  const approvalStatus = "Pending";
 
   try {
     const purchaseRequisition = await PurchaseRequisition.create({
       empId,
       item,
+      projectName,
       quantity,
       unitPrice,
       totalAmount,
@@ -34,10 +37,10 @@ export const getAllPurchaseRequisitions = async (req, res) => {
 };
 
 export const getPurchaseRequisitionById = async (req, res) => {
-  const { _id } = req.params;
+  const { id } = req.params;
 
   try {
-    const purchaseRequisition = await PurchaseRequisition.findById(_id);
+    const purchaseRequisition = await PurchaseRequisition.findById(id);
     res.json(purchaseRequisition);
   } catch (err) {
     console.log({ status: "Error", err });
@@ -72,12 +75,12 @@ export const getPurchaseRequisitionByEmpId = async (req, res) => {
       empId: empId,
     });
     if (!purchaseRequisitions || purchaseRequisitions.length === 0) {
-      return res.json({ status: "No PurchaseRequisition found" });
+      return res.json([]); // Return an empty JSON array
     } else {
       return res.json(purchaseRequisitions);
     }
   } catch (err) {
     console.log({ status: "Error", err });
-    return res.json({ status: "Error", err });
+    return res.status(500).json({ status: "Error", err });
   }
 };

@@ -9,16 +9,19 @@ const PurchaseRequisitionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  quantity: {
+  projectName:{
     type: String,
+  },
+  quantity: {
+    type: Number,
     required: true,
   },
   unitPrice: {
-    type: String,
+    type: Number,
     required: true,
   },
   totalAmount: {
-    type: String,
+    type: Number,
     required: true,
   },
   dateTime: {
