@@ -1,4 +1,3 @@
-// PurchaseRequisitionController.mjs
 import SiteManager from "../models/SiteManager.mjs";
 import bcrypt from 'bcrypt';
 

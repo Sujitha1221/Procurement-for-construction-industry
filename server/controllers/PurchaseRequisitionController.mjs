@@ -3,7 +3,7 @@
 import PurchaseRequisition from '../models/PurchaseRequisition.mjs';
 
 export const addItems = async (req, res) => {
-    const { empId, item,projectName, quantity, pricePerUnit, totalAmount } = req.body;
+    const { empId, item,projectName, quantity, unitPrice, totalAmount } = req.body;
 
     const approvalStatus = "Pending";
 
@@ -13,7 +13,7 @@ export const addItems = async (req, res) => {
             item,
             projectName,
             quantity,
-            pricePerUnit,
+            unitPrice,
             totalAmount,
             approvalStatus,
             dateTime: new Date()
