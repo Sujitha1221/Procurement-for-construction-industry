@@ -16,6 +16,7 @@ class AppRoutes {
     registerScreen:(context) => RegisterScreen(),
     addPRScreen:(context)=>AddPRScreen(),
     prScreen:(context) => PRScreen()
+    
   };
 
 
