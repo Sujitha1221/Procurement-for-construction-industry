@@ -7,9 +7,7 @@ void main() {
   
 
   testWidgets('PRScreen navigates to add PR screen on FAB press', (WidgetTester tester) async {
-    // Mock the HTTP response here
 
-    // Build our app and trigger a frame.
     await tester.pumpWidget(MaterialApp(
       home: PRScreen(),
     ));

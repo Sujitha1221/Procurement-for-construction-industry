@@ -6,11 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('PRScreen displays a list of purchase requisitions',
       (WidgetTester tester) async {
-    // Mock the HTTP response here
-    // Replace this with your own mocked response using a library like mockito or HTTP mocking
-    // Make sure to set up your mock client to return data similar to what the actual API returns
-
-    // Build our app and trigger a frame.
+   
     await tester.pumpWidget(MaterialApp(
       home: PRScreen(),
     ));
