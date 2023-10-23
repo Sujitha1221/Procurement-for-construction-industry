@@ -1,22 +1,20 @@
 import React from 'react';
-import SideNav from '../../components/SideNav';
+import SideNav1 from '../../components/SideNav/index1';
 import Header from '../../components/Header';
 import { Outlet, Route, Routes } from 'react-router-dom';
-import ViewDelivery from './ViewDeivery';
+import ViewPurchaseRequisitionSenior from './ViewPurchaseRequisition';
 
-const DeliveryLayout = () => {
+const SeniorLayout = () => {
     return (
         <>
             <div className='flex sticky top-0 left-0'>
-                <SideNav />
+                <SideNav1 />
                 <div className='flex flex-col flex-1'>
                     <Header />
-                    <div className='p-[20px] overflow-y-scroll pt-20'>
+                    <div className='p-[20px] overflow-y-scroll'>
                         <Outlet />
                         <Routes>
-                            <Route>
-                                <Route path='view-delivery' element={<ViewDelivery />} />
-                            </Route>
+                        <Route path='view-requisition' element={<ViewPurchaseRequisitionSenior />} />
                         </Routes>
                     </div>
                 </div>
@@ -25,4 +23,4 @@ const DeliveryLayout = () => {
     );
 }
 
-export default DeliveryLayout;
+export default SeniorLayout;

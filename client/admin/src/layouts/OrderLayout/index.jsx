@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import SideNav from '../../components/SideNav';
 import Header from '../../components/Header';
 import { Outlet } from 'react-router-dom';
-import ViewDeliveryDriver from './ViewDeliveryDriver';
-import AddDeliveryDriver from './AddDeliveryDriver';
+import ViewOrder from './ViewOrder';
+import AddOrder from './AddOrder';
 
 const DeliveryDriverLayout = () => {
     return (
@@ -13,12 +13,12 @@ const DeliveryDriverLayout = () => {
                 <SideNav />
                 <div className='flex flex-col flex-1'>
                     <Header />
-                    <div className='p-[20px] overflow-y-scroll pt-20'>
+                    <div className='p-[20px] overflow-y-scroll h-full pt-20 bg-neutral-100'>
                         <Outlet />
                         <Routes>
                             <Route>
-                                <Route path='view-delivery-driver' element={<ViewDeliveryDriver />} />
-                                <Route path='add-delivery-driver' element={<AddDeliveryDriver />} />
+                                <Route path='view-order' element={<ViewOrder />} />
+                                <Route path='add-order/:id' element={<AddOrder />} />
                             </Route>
                         </Routes>
                     </div>

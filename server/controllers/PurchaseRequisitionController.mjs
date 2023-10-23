@@ -3,6 +3,7 @@
 import PurchaseRequisition from '../models/PurchaseRequisition.mjs';
 
 export const addItems = async (req, res) => {
+
     const { empId, item,projectName, quantity, unitPrice, totalAmount } = req.body;
 
     const approvalStatus = "Pending";
@@ -16,6 +17,7 @@ export const addItems = async (req, res) => {
             unitPrice,
             totalAmount,
             approvalStatus,
+            reason: '',
             dateTime: new Date()
         });
         console.log({ status: 'Success', purchaseRequisition });
@@ -46,13 +48,14 @@ export const getPurchaseRequisitionById = async (req, res) => {
 }
 
 export const updateItems = async (req, res) => {
-    const { _id, approvalStatus } = req.body;
-
+    const { _id, approvalStatus, reason } = req.body;
+    
     try {
         const purchaseRequisition = await PurchaseRequisition.findById(_id);
         if (!purchaseRequisition) {
             res.json({ status: 'No user' });
         } else {
+            purchaseRequisition.reason = reason;
             purchaseRequisition.approvalStatus = approvalStatus;
             purchaseRequisition.lastModifiedDateTime = new Date();
 

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faCartShopping, faChartSimple, faDriversLicense, faTruck, faUser, faUsers } from '@fortawesome/free-solid-svg-icons'
 import LogOut from '../../layouts/LogoutLayout';
 
-const SideNav = () => {
+const SideNav1 = () => {
 
     const [activePage, setActivePage] = useState('');
     const [isOpen, setIsOpen] = useState(false);
@@ -20,17 +20,10 @@ const SideNav = () => {
     }
 
     const adminNavigation = [
-        
         {
             name: 'Purchase Requisition',
             icon: faTruck,
-            link: '/purchaseRequisition/view-requisition'
-        },
-
-        {
-            name: 'Order',
-            icon: faUsers,
-            link: '/order/view-order'
+            link: '/purchaseRequisitionSenior/view-requisition'
         }
     ]
 
@@ -47,7 +40,7 @@ const SideNav = () => {
                         </button>
                     </div>
                 </div>
-                <div className='grid' style={{marginTop:100}}>
+                <div className='grid' style={{marginTop:200}}>
                     {adminNavigation && adminNavigation.length ? adminNavigation.map((item) => (
                         <Link key={item.link} to={item.link}>
                             <div className={`px-[20px] py-[10px] w-full flex items-center gap-[10px] border border-transparent hover:bg-yellow-300 ${item.link == activePage ? 'bg-yellow-300 border border-r-yellow-500 border-4' : ''}`}>
@@ -64,7 +57,7 @@ const SideNav = () => {
                     )}
                 </div>
                 <div className="flex justify-center" style={{marginTop:50}}>
-                    <Link to={{pathname: '/logout'}}>
+                <Link to={{pathname: '/logout'}}>
                     <button className="w-[200px] bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-semibold  py-2 px-4 rounded-lg">
                         Log out
                     </button>
@@ -75,4 +68,4 @@ const SideNav = () => {
     );
 }
 
-export default SideNav;
+export default SideNav1;
