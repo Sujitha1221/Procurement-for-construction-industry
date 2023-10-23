@@ -10,6 +10,10 @@ import OrderRouter from "./routes/OrderRoute.mjs";
 import AccountantRouter from "./routes/AccountantRoute.mjs";
 import InvoiceRouter from "./routes/InvoiceRoute.mjs";
 import PaymentRouter from "./routes/PaymentRoute.mjs";
+import SiteManagerRoute from './routes/SiteManagerRoute.mjs'
+import ProjectRoute from './routes/ProjectRoute.mjs'
+import DeliveryRoute from './routes/DeliveryRoute.mjs'
+import ItemRoute from './routes/ItemRoute.mjs'
 
 const app = express();
 const PORT = process.env.PORT || "8080";
@@ -31,6 +35,10 @@ app.use("/order", OrderRouter);
 app.use("/accountant", AccountantRouter);
 app.use("/invoice", InvoiceRouter);
 app.use("/payment", PaymentRouter);
+app.use("/site-manager",SiteManagerRoute);
+app.use('/project',ProjectRoute);
+app.use("/delivery", DeliveryRoute)
+app.use('/item',ItemRoute);
 
 app.listen(PORT, () => {
   logger.info(`Server is up and running on port ${PORT}`);

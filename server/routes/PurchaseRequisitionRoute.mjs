@@ -13,9 +13,9 @@ import {
 const route = express.Router();
 
 route.post("/add-items", addItems);
-route.get("/get-pr-by-id/:_id", getPurchaseRequisitionById);
+route.get("/get-pr-by-id/:id", getPurchaseRequisitionById);
 route.get("/get-all-pr", getAllPurchaseRequisitions);
-route.get("/get-pr-by-empid", getPurchaseRequisitionByEmpId);
+route.get("/get-pr-by-empid/:empId", getPurchaseRequisitionByEmpId);
 route.put("/update-items", updateItems);
 
 export default route;
