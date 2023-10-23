@@ -17,9 +17,10 @@ const InvoiceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  pricePerUnit: {
+  unitPrice: {
     type: String,
     required: true,
+    default: "50",
   },
   totalAmount: {
     type: String,

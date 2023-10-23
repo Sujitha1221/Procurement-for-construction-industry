@@ -60,7 +60,7 @@ const CreateInvoice = () => {
         empId: orders.purchaseRequisition?.empId,
         item: orders.purchaseRequisition?.item,
         quantity: orders.purchaseRequisition?.quantity,
-        pricePerUnit: orders.purchaseRequisition?.pricePerUnit,
+        unitPrice: orders.purchaseRequisition?.unitPrice,
         totalAmount: orders.purchaseRequisition?.totalAmount,
         accountantId: accountant?.accountantId,
         accountantEmail: accountant?.accountantEmail,
@@ -137,11 +137,10 @@ const CreateInvoice = () => {
           <div class="p-4 flex justify-center">
             <TextField
               label="Price Per Unit"
-              defaultValue=" "
-              value={orders.purchaseRequisition?.pricePerUnit}
+              defaultValue="55"
+              value={orders.purchaseRequisition?.unitPrice}
               variant="outlined"
               style={{ width: "100%" }}
-              readonly
             />
           </div>
           <div class="p-4 flex justify-center">

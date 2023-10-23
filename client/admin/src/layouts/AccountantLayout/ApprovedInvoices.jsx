@@ -115,7 +115,7 @@ const ApprovedInvoices = () => {
                       }}
                     >
                       <button className="bg-transparent text-yellow-600 border-yellow-400 hover:bg-yellow-500 hover:text-white font-semibold  py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                        Create Invoice
+                        Make Payment
                       </button>
                     </Link>
                   </StyledTableCell>
