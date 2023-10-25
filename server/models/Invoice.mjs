@@ -20,7 +20,7 @@ const InvoiceSchema = new mongoose.Schema({
   unitPrice: {
     type: String,
     required: true,
-    default: "50",
+    default: "800",
   },
   totalAmount: {
     type: String,
