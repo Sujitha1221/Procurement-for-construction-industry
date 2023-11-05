@@ -1,5 +1,3 @@
-// PurchaseRequisition.mjs
-
 import mongoose from "mongoose";
 
 const PurchaseRequisitionSchema = new mongoose.Schema({
@@ -11,16 +9,19 @@ const PurchaseRequisitionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  quantity: {
+  projectName:{
     type: String,
+  },
+  quantity: {
+    type: Number,
     required: true,
   },
-  pricePerUnit: {
-    type: String,
+  unitPrice: {
+    type: Number,
     required: true,
   },
   totalAmount: {
-    type: String,
+    type: Number,
     required: true,
   },
   dateTime: {
@@ -31,6 +32,11 @@ const PurchaseRequisitionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  reason: {
+    type: String,
+    required: false,
+  }
 });
 
 const PurchaseRequisition = mongoose.model(
